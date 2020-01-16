@@ -1,0 +1,27 @@
+html,body,#app{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-size: 16px;
+}
+.pages{
+  background-color: #F3F3F3;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.view{
+  width: 100%;
+  height: calc(100% - 50px);
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.cpages{
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}

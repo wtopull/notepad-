@@ -1,0 +1,42 @@
+.h_list {
+  height: 108px;
+  background-color: #ffffff;
+  margin: 12px 10px;
+  border-radius: 6px;
+}
+
+.h_list_t {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  height: 38px;
+
+  .h_list_t_title {
+    display: flex;
+    align-items: center;
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+    span{
+      margin-left: 10px;
+    }
+  }
+
+  .h_list_t_time {
+    font-size: 12px;
+  }
+}
+
+.h_list_c {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding: 0 10px;
+
+  .h_list_c_ass {
+    width: calc(100% - 52px);
+    font-size: 12px;
+    color: #666;
+  }
+}

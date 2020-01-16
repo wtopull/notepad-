@@ -1,7 +1,7 @@
 <template>
   <div class="view info">
     <div class="users">
-      <van-image class="user_tximg" :src="userTximg" lazy-load />
+      <van-image class="user_tximg" :src="userTximg" lazy-load @click="toFixTX" />
       <div class="uesr_text">
         <router-link to="/login" tag="span">{{$t('user.Login')}}</router-link>
         <span class="uesr_text_tips">|</span>
@@ -14,6 +14,7 @@
     <van-cell center :title="$t('Language')">
       <van-switch v-model="lang" slot="right-icon" size="24" @change="switchLang" />
     </van-cell>
+    <van-cell title="单元格" is-link />
   </div>
 </template>
 
@@ -50,6 +51,9 @@ export default {
     }
   },
   methods:{
+    toFixTX() {
+      this.$router.push("/fixTx")
+    },
     switchLang(e){
       if (e) {
         this.$store.dispatch("setLanguage", "en");

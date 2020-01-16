@@ -40,6 +40,11 @@ const routes = [
     name: 'setpwd',
     component: () => import(/* webpackChunkName: "setpwd" */ '../views/info/setpwd.vue')
   },
+  {
+    path: '/fixTx',
+    name: 'fixTx',
+    component: () => import(/* webpackChunkName: "fix-tx" */ '../views/info/fix-tx.vue')
+  },
 ]
 
 const router = new VueRouter({

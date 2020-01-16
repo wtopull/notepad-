@@ -4,12 +4,6 @@ html,body,#app{
   overflow: hidden;
   font-size: 16px;
 }
-.pages{
-  background-color: #F3F3F3;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
 .view{
   width: 100%;
   height: calc(100% - 50px);
@@ -24,4 +18,18 @@ html,body,#app{
   top: 0;
   left: 0;
   z-index: 2;
+}
+/* 主题切换--默认色 */
+.default_theme .pages{
+  background-color: rgb(243, 243, 243);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+/* 主题切换--红色 */
+.black_theme .pages{
+  background-color: rgb(224, 16, 16);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }

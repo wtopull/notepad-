@@ -11,19 +11,19 @@ const routes = [
     component: Home
   },
   {
-    path: '/front',
-    name: 'front',
-    component: () => import(/* webpackChunkName: "front" */ '../views/front.vue')
+    path: '/Fro',
+    name: 'Fro',
+    component: () => import(/* webpackChunkName: "front" */ '../views/Fro.vue')
   },
   {
-    path: '/serves',
-    name: 'serves',
-    component: () => import(/* webpackChunkName: "serves" */ '../views/serves.vue')
+    path: '/Ser',
+    name: 'Ser',
+    component: () => import(/* webpackChunkName: "Ser" */ '../views/Ser.vue')
   },
   {
-    path: '/info',
-    name: 'info',
-    component: () => import(/* webpackChunkName: "info" */ '../views/info.vue')
+    path: '/Info',
+    name: 'Info',
+    component: () => import(/* webpackChunkName: "Info" */ '../views/Info.vue')
   },
   {
     path: '/login',

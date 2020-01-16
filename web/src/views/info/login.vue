@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       islogin: false,
-      logoImg: require("@/assets/img/icon_logo.png"),
       username: "criss",
       password: "123456"
     };

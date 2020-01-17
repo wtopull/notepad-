@@ -30,11 +30,25 @@ export default {
   mounted() {},
   methods: {
     login: function(){
-      this.islogin = true;
-      setTimeout(() => {
-        this.islogin = false;
-        this.$router.push("/info");
-      }, 1280);
+      let url = "";
+      // url = "http://172.17.16.243/api/user/login";
+      url = "https://35666j.com/index.php/index/webs/banner"
+      // this.$axios.post(url).then(res => {
+      //   console.log(res);
+      // })
+      this.$api("user/login").then(res => {
+        console.log(res);
+      })
+
+      // this.$api.post("user/login",{username: this.username,password:this.password}).then( res => {
+      //   console.log(res);
+      // })
+
+      // this.islogin = true;
+      // setTimeout(() => {
+      //   this.islogin = false;
+      //   this.$router.push("/info");
+      // }, 1280);
     },
     onClickLeft() {
       // this.$toast.loading({

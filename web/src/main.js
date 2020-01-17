@@ -3,7 +3,8 @@ import Vant from 'vant';
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import axios from 'axios'
+// import axios from 'axios'
+import api from './assets/js/api'
 import './assets/css/public.css'
 import 'amfe-flexible/index.js'
 import 'vant/lib/index.css';
@@ -14,7 +15,9 @@ import i18n from './lang/'
 
 Vue.use(Vant);
 Vue.use(Lazyload);
-Vue.prototype.$axios = axios;
+// axios.defaults.withCredentials = true;
+// Vue.prototype.$axios = axios;
+Vue.prototype.$api = api.post;
 Vue.prototype.$theme = 'default';
 Vue.config.productionTip = false
 

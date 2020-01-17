@@ -24,3 +24,13 @@ npm run test:unit
 ```
 npm run lint
 ```
+
+## Cookies
+
+```
+import Cookies from 'js-cookie'
+
+Cookies.set('name', 'value');
+Cookies.get('name');
+Cookies.remove('name');
+```

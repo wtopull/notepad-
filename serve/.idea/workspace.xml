@@ -23,7 +23,6 @@
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/topthink/think-helper" />
-      <path value="$PROJECT_DIR$/vendor/topthink/think-trace" />
       <path value="$PROJECT_DIR$/vendor/topthink/framework" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-orm" />
       <path value="$PROJECT_DIR$/vendor/opis/closure" />
@@ -38,9 +37,14 @@
       <path value="$PROJECT_DIR$/vendor/league/flysystem" />
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-captcha" />
-      <path value="$PROJECT_DIR$/vendor/topthink/think-multi-app" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-view" />
       <path value="$PROJECT_DIR$/vendor/topthink/think-template" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
+      <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
+      <path value="$PROJECT_DIR$/vendor/lcobucci/jwt" />
+      <path value="$PROJECT_DIR$/vendor/tp5er/tp5-databackup" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
+      <path value="$PROJECT_DIR$/vendor/markbaker/matrix" />
     </include_path>
   </component>
   <component name="ProjectId" id="1WNOgSmUv78t5wH3exPQXuJvvII" />
@@ -53,7 +57,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/index/config" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/route/api" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -63,8 +67,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\php\PHPTutorial\WWW\science\app\common" />
+      <recent name="E:\php\PHPTutorial\WWW\science\route\api" />
+      <recent name="E:\php\PHPTutorial\WWW\science\app\api\controller\v1" />
+      <recent name="E:\php\PHPTutorial\WWW\science\app\api\controller" />
+      <recent name="E:\php\PHPTutorial\WWW\science\route" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\php\PHPTutorial\WWW\science\app\index\config" />
+      <recent name="E:\php\PHPTutorial\WWW\science\route\api" />
+      <recent name="E:\php\PHPTutorial\WWW\science\app" />
+      <recent name="E:\php\PHPTutorial\WWW\science\app\super\view\index" />
+      <recent name="E:\php\PHPTutorial\WWW\science\app\super\view\public" />
+      <recent name="E:\php\PHPTutorial\WWW\science\route" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -91,7 +106,10 @@
       <updated>1578986696460</updated>
       <workItem from="1578986697966" duration="3742000" />
       <workItem from="1579007387240" duration="824000" />
-      <workItem from="1579060829626" duration="913000" />
+      <workItem from="1579060829626" duration="1978000" />
+      <workItem from="1579154043434" duration="17658000" />
+      <workItem from="1579238340055" duration="11972000" />
+      <workItem from="1579326014762" duration="7783000" />
     </task>
     <servers />
   </component>
@@ -99,10 +117,22 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="690" y="333" key="NewPhpClassDialog" timestamp="1578993330133">
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1579247995356">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="333" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578993330133" />
+    <state x="690" y="275" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579247995356" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1579329423885">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1579329423885" />
+    <state x="690" y="333" key="NewPhpClassDialog" timestamp="1579247887370">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="333" key="NewPhpClassDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579247887370" />
+    <state x="776" y="443" key="NewPhpFileDialog" timestamp="1579158656610">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="776" y="443" key="NewPhpFileDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579158656610" />
     <state x="461" y="162" key="SettingsEditor" timestamp="1578992817641">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -111,5 +141,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1579060832494" />
+    <state x="567" y="220" width="786" height="600" key="find.popup" timestamp="1579335222908">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="567" y="220" width="786" height="600" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1579335222908" />
   </component>
 </project>

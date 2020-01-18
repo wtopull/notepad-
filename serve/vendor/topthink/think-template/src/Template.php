@@ -14,6 +14,7 @@ namespace think;
 
 use Exception;
 use Psr\SimpleCache\CacheInterface;
+use think\template\exception\TemplateNotFoundException;
 
 /**
  * ThinkPHP分离出来的模板引擎
@@ -131,8 +132,8 @@ class Template
     /**
      * 模板引擎参数赋值
      * @access public
-     * @param  string $name
-     * @param  mixed  $value
+     * @param  mixed $name
+     * @param  mixed $value
      */
     public function __set($name, $value)
     {
@@ -220,9 +221,8 @@ class Template
      */
     public function fetch(string $template, array $vars = []): void
     {
-        if ($vars) {
-            $this->data = array_merge($this->data, $vars);
-        }
+
+        $data = $vars ? array_merge($this->data, $vars) : $this->data;
 
         if (!empty($this->config['cache_id']) && $this->config['display_cache'] && $this->cache) {
             // 读取渲染缓存
@@ -248,7 +248,7 @@ class Template
             ob_implicit_flush(0);
 
             // 读取编译存储
-            $this->storage->read($cacheFile, $this->data);
+            $this->storage->read($cacheFile, $data);
 
             // 获取并清空缓存
             $content = ob_get_clean();
@@ -281,15 +281,13 @@ class Template
     /**
      * 渲染模板内容
      * @access public
-     * @param  string $content 模板内容
-     * @param  array  $vars 模板变量
+     * @param  string    $content 模板内容
+     * @param  array     $vars 模板变量
      * @return void
      */
     public function display(string $content, array $vars = []): void
     {
-        if ($vars) {
-            $this->data = array_merge($this->data, $vars);
-        }
+        $data = $vars ? array_merge($this->data, $vars) : $this->data;
 
         $cacheFile = $this->config['cache_path'] . $this->config['cache_prefix'] . md5($content) . '.' . ltrim($this->config['cache_suffix'], '.');
 
@@ -299,14 +297,14 @@ class Template
         }
 
         // 读取编译存储
-        $this->storage->read($cacheFile, $this->data);
+        $this->storage->read($cacheFile, $data);
     }
 
     /**
      * 设置布局
      * @access public
-     * @param  mixed  $name 布局模板名称 false 则关闭布局
-     * @param  string $replace 布局模板内容替换标识
+     * @param  mixed     $name 布局模板名称 false 则关闭布局
+     * @param  string    $replace 布局模板内容替换标识
      * @return $this
      */
     public function layout($name, string $replace = '')
@@ -986,9 +984,6 @@ class Template
                         if (isset($this->extend[$first])) {
                             $callback = $this->extend[$first];
                             $parseStr = $callback($vars);
-                        } elseif ('$Request' == $first) {
-                            // 输出请求变量
-                            $parseStr = $this->parseRequestVar($vars);
                         } elseif ('$Think' == $first) {
                             // 所有以Think.打头的以特殊变量对待 无需模板赋值就可以输出
                             $parseStr = $this->parseThinkVar($vars);
@@ -1112,47 +1107,6 @@ class Template
     }
 
     /**
-     * 请求变量解析
-     * 格式 以 $Request. 打头的变量属于请求变量
-     * @access public
-     * @param  array $vars 变量数组
-     * @return string
-     */
-    public function parseRequestVar(array $vars): string
-    {
-        $type  = strtoupper(trim(array_shift($vars)));
-        $param = implode('.', $vars);
-
-        switch ($type) {
-            case 'SERVER':
-                $parseStr = '$_SERVER[\'' . $param . '\']';
-                break;
-            case 'GET':
-                $parseStr = '$_GET[\'' . $param . '\']';
-                break;
-            case 'POST':
-                $parseStr = '$_POST[\'' . $param . '\']';
-                break;
-            case 'COOKIE':
-                $parseStr = '$_COOKIE[\'' . $param . '\']';
-                break;
-            case 'SESSION':
-                $parseStr = '$_SESSION[\'' . $param . '\']';
-                break;
-            case 'ENV':
-                $parseStr = '$_ENV[\'' . $param . '\']';
-                break;
-            case 'REQUEST':
-                $parseStr = '$_REQUEST[\'' . $param . '\']';
-                break;
-            default:
-                $parseStr = '\'\'';
-        }
-
-        return $parseStr;
-    }
-
-    /**
      * 特殊模板变量解析
      * 格式 以 $Think. 打头的变量属于特殊模板变量
      * @access public
@@ -1164,21 +1118,54 @@ class Template
         $type  = strtoupper(trim(array_shift($vars)));
         $param = implode('.', $vars);
 
-        switch ($type) {
-            case 'CONST':
-                $parseStr = strtoupper($param);
-                break;
-            case 'NOW':
-                $parseStr = "date('Y-m-d g:i a',time())";
-                break;
-            case 'LDELIM':
-                $parseStr = '\'' . ltrim($this->config['tpl_begin'], '\\') . '\'';
-                break;
-            case 'RDELIM':
-                $parseStr = '\'' . ltrim($this->config['tpl_end'], '\\') . '\'';
-                break;
-            default:
-                $parseStr = defined($type) ? $type : '\'\'';
+        if ($vars) {
+            switch ($type) {
+                case 'SERVER':
+                    $parseStr = '$_SERVER[\'' . $param . '\']';
+                    break;
+                case 'GET':
+                    $parseStr = '$_GET[\'' . $param . '\']';
+                    break;
+                case 'POST':
+                    $parseStr = '$_POST[\'' . $param . '\']';
+                    break;
+                case 'COOKIE':
+                    $parseStr = '$_COOKIE[\'' . $param . '\']';
+                    break;
+                case 'SESSION':
+                    $parseStr = '$_SESSION[\'' . $param . '\']';
+                    break;
+                case 'ENV':
+                    $parseStr = '$_ENV[\'' . $param . '\']';
+                    break;
+                case 'REQUEST':
+                    $parseStr = '$_REQUEST[\'' . $param . '\']';
+                    break;
+                case 'CONST':
+                    $parseStr = strtoupper($param);
+                    break;
+                default:
+                    $parseStr = '\'\'';
+                    break;
+            }
+        } else {
+            switch ($type) {
+                case 'NOW':
+                    $parseStr = "date('Y-m-d g:i a',time())";
+                    break;
+                case 'LDELIM':
+                    $parseStr = '\'' . ltrim($this->config['tpl_begin'], '\\') . '\'';
+                    break;
+                case 'RDELIM':
+                    $parseStr = '\'' . ltrim($this->config['tpl_end'], '\\') . '\'';
+                    break;
+                default:
+                    if (defined($type)) {
+                        $parseStr = $type;
+                    } else {
+                        $parseStr = '';
+                    }
+            }
         }
 
         return $parseStr;
@@ -1220,7 +1207,7 @@ class Template
      * 解析模板文件名
      * @access private
      * @param  string $template 文件名
-     * @return string
+     * @return string|false
      */
     private function parseTemplateFile(string $template): string
     {
@@ -1242,7 +1229,7 @@ class Template
             return $template;
         }
 
-        throw new Exception('template not exists:' . $template);
+        throw new TemplateNotFoundException('template not exists:' . $template, $template);
     }
 
     /**

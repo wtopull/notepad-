@@ -128,7 +128,7 @@ class Think
             if (is_dir($this->app->getAppPath() . $view)) {
                 $path = $this->app->getAppPath() . $view . DIRECTORY_SEPARATOR;
             } else {
-                $appName = $this->app->http->getName();
+                $appName = $this->app['request']->app();
                 $path    = $this->app->getRootPath() . $view . DIRECTORY_SEPARATOR . ($appName ? $appName . DIRECTORY_SEPARATOR : '');
             }
 

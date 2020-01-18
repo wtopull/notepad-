@@ -59,6 +59,12 @@ class RuleGroup extends Rule
     protected $fullName;
 
     /**
+     * 所在域名
+     * @var string
+     */
+    protected $domain;
+
+    /**
      * 分组别名
      * @var string
      */
@@ -355,7 +361,7 @@ class RuleGroup extends Rule
             $var = [];
             foreach ($match as $key => $val) {
                 if (is_string($key) && '' !== $val) {
-                    [$name, $pos] = explode('_THINK_', $key);
+                    list($name, $pos) = explode('_THINK_', $key);
 
                     $var[$name] = $val;
                 }

@@ -4,10 +4,19 @@
 namespace app\super\controller;
 
 
-class Index
+use app\BaseController;
+use think\facade\View;
+
+
+class Index extends Base
 {
     public function index()
     {
-        return 'super-index';
+        return View::fetch();
+    }
+
+    public function welcome()
+    {
+        return View::fetch();
     }
 }

@@ -13,6 +13,7 @@ declare (strict_types = 1);
 namespace think;
 
 use Closure;
+use think\cache\Driver;
 use think\exception\RouteNotFoundException;
 use think\route\Dispatch;
 use think\route\dispatch\Url as UrlDispatch;
@@ -63,6 +64,9 @@ class Route
         'remove_slash'          => false,
         // 使用注解路由
         'route_annotation'      => false,
+        // 路由缓存设置
+        'route_check_cache'     => false,
+        'route_check_cache_key' => '',
         // 默认的路由变量规则
         'default_route_pattern' => '[\w\.]+',
         // URL伪静态后缀
@@ -94,6 +98,12 @@ class Route
      * @var Request
      */
     protected $request;
+
+    /**
+     * 缓存
+     * @var Driver
+     */
+    protected $cache;
 
     /**
      * @var RuleName
@@ -170,15 +180,15 @@ class Route
     {
         $this->config = array_merge($this->config, $this->app->config->get('route'));
 
-        if (!empty($this->config['middleware'])) {
-            $this->app->middleware->import($this->config['middleware'], 'route');
-        }
-
         $this->lazy($this->config['url_lazy_route']);
         $this->mergeRuleRegex = $this->config['route_rule_merge'];
         $this->removeSlash    = $this->config['remove_slash'];
 
         $this->group->removeSlash($this->removeSlash);
+
+        if ($this->config['route_check_cache']) {
+            $this->cache = $this->app->cache->store(true === $this->config['route_check_cache'] ? '' : $this->config['route_check_cache']);
+        }
     }
 
     public function config(string $name = null)
@@ -391,16 +401,14 @@ class Route
     {
         if (is_null($domain)) {
             $domain = $this->host;
-        } elseif (false === strpos($domain, '.') && $this->request) {
+        } elseif (false === strpos($domain, '.')) {
             $domain .= '.' . $this->request->rootDomain();
         }
 
-        if ($this->request) {
-            $subDomain = $this->request->subDomain();
+        $subDomain = $this->request->subDomain();
 
-            if (strpos($subDomain, '.')) {
-                $name = '*' . strstr($subDomain, '.');
-            }
+        if (strpos($subDomain, '.')) {
+            $name = '*' . strstr($subDomain, '.');
         }
 
         if (isset($this->bind[$domain])) {
@@ -540,7 +548,7 @@ class Route
      */
     public function group($name, $route = null): RuleGroup
     {
-        if ($name instanceof Closure) {
+        if ($name instanceof \Closure) {
             $route = $name;
             $name  = '';
         }
@@ -732,20 +740,48 @@ class Route
         $this->init();
 
         if ($withRoute) {
-            //加载路由
-            $withRoute();
-            $dispatch = $this->check();
+            $checkCallback = function () use ($request, $withRoute) {
+                //加载路由
+                $withRoute();
+                return $this->check();
+            };
+
+            if ($this->config['route_check_cache']) {
+                $dispatch = $this->cache
+                    ->tag('route_cache')
+                    ->remember($this->getRouteCacheKey($request), $checkCallback);
+            } else {
+                $dispatch = $checkCallback();
+            }
         } else {
             $dispatch = $this->url($this->path());
         }
 
         $dispatch->init($this->app);
 
-        return $this->app->middleware->pipeline('route')
+        return $this->app->middleware->pipeline()
             ->send($request)
             ->then(function () use ($dispatch) {
                 return $dispatch->run();
             });
+    }
+
+    /**
+     * 获取路由缓存Key
+     * @access protected
+     * @param Request $request
+     * @return string
+     */
+    protected function getRouteCacheKey(Request $request): string
+    {
+        if (!empty($this->config['route_check_cache_key'])) {
+            $closure  = $this->config['route_check_cache_key'];
+            $routeKey = $closure($request);
+        } else {
+            $routeKey = md5($request->baseUrl(true) . ':' . $request->method());
+        }
+
+        return $routeKey;
     }
 
     /**
@@ -877,7 +913,7 @@ class Route
      */
     public function buildUrl(string $url = '', array $vars = []): UrlBuild
     {
-        return $this->app->make(UrlBuild::class, [$this, $this->app, $url, $vars], true);
+        return new UrlBuild($this, $this->app, $url, $vars);
     }
 
     /**

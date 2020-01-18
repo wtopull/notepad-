@@ -101,8 +101,7 @@ class Captcha
         $bag = '';
 
         if ($this->math) {
-            $this->useZh  = false;
-            $this->length = 5;
+            $this->useZh = false;
 
             $x   = random_int(10, 30);
             $y   = random_int(1, 9);

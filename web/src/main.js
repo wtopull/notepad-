@@ -1,9 +1,8 @@
-import Vue from 'vue'
+const Vue = require( 'vue' )
 import Vant from 'vant';
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import axios from 'axios'
 import api from './assets/js/api'
 import './assets/css/public.css'
 import 'amfe-flexible/index.js'
@@ -13,10 +12,9 @@ import { Lazyload } from 'vant';
 import { Locale } from 'vant';
 import i18n from './lang/'
 
+
 Vue.use(Vant);
 Vue.use(Lazyload);
-// axios.defaults.withCredentials = true;
-// Vue.prototype.$axios = axios;
 Vue.prototype.$api = api.post;
 Vue.prototype.$theme = 'default';
 Vue.config.productionTip = false

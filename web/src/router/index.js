@@ -1,8 +1,8 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+const Vue = require('vue')
+const VueRouter = require('vue-router')
 import Home from '../views/Home.vue'
 
-Vue.use(VueRouter)
+if (!window.VueRouter) Vue.use(VueRouter)
 
 const routes = [
   {

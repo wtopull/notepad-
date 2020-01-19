@@ -1,5 +1,6 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+// import 'babel-polyfill';
+const Vue = require( 'vue' )
+const Vuex = require( 'vuex' )
 import Cookies from 'js-cookie'
 
 Vue.use(Vuex)

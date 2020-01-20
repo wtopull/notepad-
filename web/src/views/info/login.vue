@@ -19,45 +19,41 @@
   </div>
 </template>
 <script>
+import Cookies from 'js-cookie'
 export default {
   data() {
     return {
       islogin: false,
-      username: "criss",
-      password: "123456"
+      username: "",
+      password: ""
     };
   },
-  mounted() {},
+  mounted() {
+    if(location.hostname === "172.17.16.38" || location.hostname === "localhost"){
+      this.username = "criss168"
+      this.password = "11211121"
+    }
+  },
   methods: {
+    // 登录
     login: function(){
-      let url = "";
-      // url = "http://172.17.16.243/api/user/login";
-      url = "https://35666j.com/index.php/index/webs/banner"
-      // this.$axios.post(url).then(res => {
-      //   console.log(res);
-      // })
-      this.$api("user/login").then(res => {
-        console.log(res);
+      this.islogin = true;
+      this.$api.post("user/login",{username: this.username,password:this.password}).then( res => {
+        if(res.code === 1000){
+          Cookies.set("token",res.data.token)
+          this.islogin = false;
+          this.$toast(res.msg)
+          setTimeout(() => {
+            this.$router.push("/info");
+          }, 1680);
+        }
       })
-
-      // this.$api.post("user/login",{username: this.username,password:this.password}).then( res => {
-      //   console.log(res);
-      // })
-
-      // this.islogin = true;
-      // setTimeout(() => {
-      //   this.islogin = false;
-      //   this.$router.push("/info");
-      // }, 1280);
     },
+    // 返回
     onClickLeft() {
-      // this.$toast.loading({
-      //   message: "加载中...",
-      //   forbidClick: true,
-      //   loadingType: "spinner"
-      // });
       this.$router.push("/info");
     },
+    // 找回密码
     toSetPWD:function(){
       this.$router.push("/setpwd")
     }

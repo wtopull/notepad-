@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 export default {
   name: "home",
   data() {
@@ -44,23 +44,23 @@ export default {
     } else {
       this.checked = true;
     }
-    if (Cookies.get('language') == "zh") {
+    if (Cookies.get("language") == "zh") {
       this.lang = false;
     } else {
       this.lang = true;
     }
   },
-  methods:{
+  methods: {
     toFixTX() {
-      this.$router.push("/fixTx")
+      this.$router.push("/fixTx");
     },
-    switchLang(e){
+    switchLang(e) {
       if (e) {
         this.$store.dispatch("setLanguage", "en");
-        this.$i18n.locale = "en"
+        this.$i18n.locale = "en";
       } else {
         this.$store.dispatch("setLanguage", "zh");
-        this.$i18n.locale = "zh"
+        this.$i18n.locale = "zh";
       }
     }
   },

@@ -40,6 +40,7 @@ class Ad extends Base
     {
         //全局查询条件
         $where = [];
+
         $keyword = Request::param('keyword');
         if (!empty($keyword)) {
             $where[] = ['name|description', 'like', '%' . $keyword . '%'];
@@ -69,6 +70,7 @@ class Ad extends Base
             'list'     => $list,
             'empty'    => empty_list(12),
         ];
+
         View::assign($view);
         return View::fetch();
     }

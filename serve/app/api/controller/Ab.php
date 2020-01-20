@@ -16,6 +16,7 @@ class Ab extends Base
         'app\api\middleware\Api',
     ];
 
+
     public function lists()
     {
         $list = Ad::getBannerList();

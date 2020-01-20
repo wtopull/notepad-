@@ -45,14 +45,16 @@ class Api
             if ($jwtAuth->validate() && $jwtAuth->verify()) {
                 return $next($request);
             } else {
-                $this->result([], 0, 'token已过期');
+                $this->result([], 10001, 'token已过期');
             }
         } else {
-            $this->result([], 0, 'token不能为空');
+            $this->result([], 10002, 'token不能为空');
         }
 
         return $next($request);
     }
+
+
 
     /**
      * 返回封装后的API数据到客户端

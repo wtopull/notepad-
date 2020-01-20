@@ -61,14 +61,14 @@ class User extends Base
         $username = trim(Request::param('username'));
         $password = trim(Request::param('password'));
         if (!$username || !$password) {
-            $this->result([], 0, '帐号或密码不能为空');
+            $this->result([], 1001, '帐号或密码不能为空');
         }
         //校验用户名密码
         $user = Users::where('username', $username)
             ->where('password', md5($password))
             ->find();
         if (empty($user)) {
-            $this->result([], 0, '帐号或密码错误');
+            $this->result([], 1002, '帐号或密码错误');
         } else {
             if ($user['status'] == 1) {
                 //获取jwt的句柄
@@ -77,7 +77,7 @@ class User extends Base
                 //更新信息
                 Users::where('id', $user['id'])
                     ->update(['last_login_time' => time(), 'last_login_ip' => Request::ip()]);
-                $this->result(['token' => $token], 1, '登录成功');
+                $this->result(['token' => $token], 1000, '登录成功');
             } else {
                 $this->result([], 0, '用户已被禁用');
             }
@@ -105,23 +105,23 @@ class User extends Base
 
         //非空判断
         if (empty($username) || empty($password) || empty($repassword)) {
-            $this->result([], 0, '请输入用户名、密码和确认密码');
+            $this->result([], 1003, '请输入用户名、密码和确认密码');
         }
 
         //密码长度不能低于6位
         if (strlen($password) < 6) {
-            $this->result([], 0, '密码长度不能低于6位');
+            $this->result([], 1004, '密码长度不能低于6位');
         }
 
         //密码和确认密码不一致
         if ($password !== $repassword) {
-            $this->result([], 0, '密码和确认密码不一致');
+            $this->result([], 1005, '密码和确认密码不一致');
         }
 
         //防止重复
         $id = Db::name('users')->where('username', '=', $username)->find();
         if ($id) {
-            $this->result([], 0, '用户名已被注册');
+            $this->result([], 1006, '用户名已被注册');
         }
 
         //注册入库
@@ -135,9 +135,9 @@ class User extends Base
         $data['sex'] = Request::post('sex') ? Request::post('sex') : 0;
         $id = Db::name('users')->insertGetId($data);
         if ($id) {
-            $this->result([], 1, '注册成功');
+            $this->result([], 1000, '注册成功');
         } else {
-            $this->result([], 0, '注册失败');
+            $this->result([], 1007, '注册失败,服务器错误');
         }
     }
 
@@ -158,7 +158,7 @@ class User extends Base
             ->field('u.*,ut.name as type_name')
             ->where('u.id', $this->getUid())
             ->find();
-        return $this->result($user, 1, '');
+        return $this->result($user, 1000, '');
     }
 
     /**

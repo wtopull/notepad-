@@ -9,4 +9,6 @@ return [
        \think\middleware\SessionInit::class,
     // 页面Trace调试
     // \think\middleware\TraceDebug::class,
+    //跨域问题
+    \think\middleware\AllowCrossDomain::class
 ];

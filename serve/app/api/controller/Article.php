@@ -22,25 +22,26 @@ class Article extends Base
      * @throws \think\db\exception\ModelNotFoundException
      * 文章列表
      */
+
     public function article()
     {
         $list = ar::articleList(input(''));
         if ($list) {
-            $this->result($list, 1, '文章数据');
+            $this->result($list, 2000, '文章数据');
         }
-        $this->result([], 0, '没有文章数据');
+        $this->result([], 2001, '没有文章数据');
     }
 
     public function info()
     {
         $id = Request::param('id');
         if(!$id){
-            $this->result([],0,'参数错误');
+            $this->result([],2002,'参数错误');
         }
         $article = ar::info($id);
         if($article){
-            $this->result($article,1,'SUCCESS');
+            $this->result($article,2000,'SUCCESS');
         }
-        $this->result([],0,'当前数据不存在');
+        $this->result([],2001,'当前数据不存在');
     }
 }

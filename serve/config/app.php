@@ -18,7 +18,7 @@ return [
     'auto_multi_app'   => true,
     // 应用映射（自动多应用模式有效）
     'app_map'          => [
-        'think'=>'api'
+//        'think'=>'api'
     ],
     // 域名绑定（自动多应用模式有效）
     'domain_bind'      => [],

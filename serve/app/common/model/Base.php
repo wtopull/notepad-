@@ -77,12 +77,12 @@ class Base extends Model
     }
 
     // 排序修改
-    public static function sort($data){
-        $info = self::find($data['id']);
-        $info -> sort = $data['sort'];
-        $info -> save();
-        return json(['error'=>0, 'msg'=>'修改成功!']);
-    }
+//    public static function sort($data){
+//        $info = self::find($data['id']);
+//        $info -> sort = $data['sort'];
+//        $info -> save();
+//        return json(['error'=>0, 'msg'=>'修改成功!']);
+//    }
 
     // 状态修改
     public static function state($id){

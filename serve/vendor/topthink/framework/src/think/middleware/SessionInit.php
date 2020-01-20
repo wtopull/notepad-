@@ -55,10 +55,7 @@ class SessionInit
             $sessionId = $request->cookie($cookieName);
         }
 
-        if ($sessionId) {
-            $this->session->setId($sessionId);
-        }
-
+        $this->session->setId($sessionId);
         $this->session->init();
 
         $request->withSession($this->session);

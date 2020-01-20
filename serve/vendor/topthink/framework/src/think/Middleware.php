@@ -48,7 +48,7 @@ class Middleware
      * @param string $type 中间件类型
      * @return void
      */
-    public function import(array $middlewares = [], string $type = 'global'): void
+    public function import(array $middlewares = [], string $type = 'route'): void
     {
         foreach ($middlewares as $middleware) {
             $this->add($middleware, $type);
@@ -62,25 +62,13 @@ class Middleware
      * @param string $type 中间件类型
      * @return void
      */
-    public function add($middleware, string $type = 'global'): void
+    public function add($middleware, string $type = 'route'): void
     {
         $middleware = $this->buildMiddleware($middleware, $type);
 
-        if (!empty($middleware)) {
+        if ($middleware) {
             $this->queue[$type][] = $middleware;
-            $this->queue[$type]   = array_unique($this->queue[$type], SORT_REGULAR);
         }
-    }
-
-    /**
-     * 注册路由中间件
-     * @access public
-     * @param mixed $middleware
-     * @return void
-     */
-    public function route($middleware): void
-    {
-        $this->add($middleware, 'route');
     }
 
     /**
@@ -100,15 +88,11 @@ class Middleware
      * @param mixed  $middleware
      * @param string $type 中间件类型
      */
-    public function unshift($middleware, string $type = 'global')
+    public function unshift($middleware, string $type = 'route')
     {
         $middleware = $this->buildMiddleware($middleware, $type);
 
         if (!empty($middleware)) {
-            if (!isset($this->queue[$type])) {
-                $this->queue[$type] = [];
-            }
-
             array_unshift($this->queue[$type], $middleware);
         }
     }
@@ -119,7 +103,7 @@ class Middleware
      * @param string $type 中间件类型
      * @return array
      */
-    public function all(string $type = 'global'): array
+    public function all(string $type = 'route'): array
     {
         return $this->queue[$type] ?? [];
     }
@@ -130,16 +114,16 @@ class Middleware
      * @param string $type 中间件类型
      * @return Pipeline
      */
-    public function pipeline(string $type = 'global')
+    public function pipeline(string $type = 'route')
     {
         return (new Pipeline())
             ->through(array_map(function ($middleware) {
                 return function ($request, $next) use ($middleware) {
-                    [$call, $params] = $middleware;
+                    list($call, $param) = $middleware;
                     if (is_array($call) && is_string($call[0])) {
                         $call = [$this->app->make($call[0]), $call[1]];
                     }
-                    $response = call_user_func($call, $request, $next, ...$params);
+                    $response = call_user_func($call, $request, $next, $param);
 
                     if (!$response instanceof Response) {
                         throw new LogicException('The middleware must return Response instance');
@@ -158,7 +142,7 @@ class Middleware
     {
         foreach ($this->queue as $queue) {
             foreach ($queue as $middleware) {
-                [$call] = $middleware;
+                list($call) = $middleware;
                 if (is_array($call) && is_string($call[0])) {
                     $instance = $this->app->make($call[0]);
                     if (method_exists($instance, 'end')) {
@@ -182,7 +166,9 @@ class Middleware
 
         $handler->report($e);
 
-        return $handler->render($passable, $e);
+        $response = $handler->render($passable, $e);
+
+        return $response;
     }
 
     /**
@@ -192,14 +178,14 @@ class Middleware
      * @param string $type 中间件类型
      * @return array
      */
-    protected function buildMiddleware($middleware, string $type): array
+    protected function buildMiddleware($middleware, string $type = 'route'): array
     {
         if (is_array($middleware)) {
-            [$middleware, $params] = $middleware;
+            list($middleware, $param) = $middleware;
         }
 
         if ($middleware instanceof Closure) {
-            return [$middleware, $params ?? []];
+            return [$middleware, $param ?? null];
         }
 
         if (!is_string($middleware)) {
@@ -218,7 +204,7 @@ class Middleware
             return [];
         }
 
-        return [[$middleware, 'handle'], $params ?? []];
+        return [[$middleware, 'handle'], $param ?? null];
     }
 
     /**
@@ -246,10 +232,10 @@ class Middleware
      */
     protected function getMiddlewarePriority($priority, $middleware)
     {
-        [$call] = $middleware;
+        list($call) = $middleware;
         if (is_array($call) && is_string($call[0])) {
             $index = array_search($call[0], array_reverse($priority));
-            return false === $index ? -1 : $index;
+            return $index === false ? -1 : $index;
         }
         return -1;
     }

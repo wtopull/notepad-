@@ -2,164 +2,36 @@
   <div class="view home">
     <van-swipe :autoplay="3000" :height="150">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img v-lazy="image.img" />
+        <img v-lazy="$api.baseUrl +''+ image.image" />
       </van-swipe-item>
     </van-swipe>
     <van-notice-bar left-icon="volume-o" :speed="50" background="#ffffff">通知内f容通知内f容通知内f容</van-notice-bar>
-    <div class="h_list" @click="toDetail">
-      <div class="h_list_t">
-        <p class="h_list_t_title">
+    <div>
+      <div class="h_list" v-for="(item,index) in artLists" :key="index" @click="toDetail(item)">
+        <div class="h_list_t">
+          <p class="h_list_t_title">
+            <van-image
+              width="26"
+              height="26"
+              fit="cover"
+              lazy-load
+              round
+              src="http://img1.imgtn.bdimg.com/it/u=2088455182,192644019&fm=26&gp=0.jpg"
+            />
+            <span>{{item.title}}</span>
+          </p>
+          <p class="h_list_t_time">{{item.sort | setDate}}</p>
+        </div>
+        <div class="h_list_c">
+          <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
           <van-image
-            width="26"
-            height="26"
+            width="48"
+            height="48"
             fit="cover"
             lazy-load
-            round
-            src="http://img1.imgtn.bdimg.com/it/u=2088455182,192644019&fm=26&gp=0.jpg"
+            src="http://img1.imgtn.bdimg.com/it/u=2808968104,3449164699&fm=26&gp=0.jpg"
           />
-          <span>HTML</span>
-        </p>
-        <p class="h_list_t_time">刚刚</p>
-      </div>
-      <div class="h_list_c">
-        <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
-        <van-image
-          width="48"
-          height="48"
-          fit="cover"
-          lazy-load
-          src="http://img1.imgtn.bdimg.com/it/u=2808968104,3449164699&fm=26&gp=0.jpg"
-        />
-      </div>
-    </div>
-    <div class="h_list">
-      <div class="h_list_t">
-        <p class="h_list_t_title">
-          <van-image
-            width="26"
-            height="26"
-            fit="cover"
-            lazy-load
-            round
-            src="http://5b0988e595225.cdn.sohucs.com/images/20180427/a7edbf22edbf4756ac126ee282b1086f.jpeg"
-          />
-          <span>Pyhon</span>
-        </p>
-        <p class="h_list_t_time">1小时前</p>
-      </div>
-      <div class="h_list_c">
-        <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
-        <van-image
-          width="48"
-          height="48"
-          fit="cover"
-          lazy-load
-          src="http://img4.imgtn.bdimg.com/it/u=2895274932,1289346088&fm=26&gp=0.jpg"
-        />
-      </div>
-    </div>
-    <div class="h_list">
-      <div class="h_list_t">
-        <p class="h_list_t_title">
-          <van-image
-            width="26"
-            height="26"
-            fit="cover"
-            lazy-load
-            round
-            src="http://test.rexhang.com/blog/wp-content/uploads/2016/03/20150301021016689.png"
-          />
-          <span>JS</span>
-        </p>
-        <p class="h_list_t_time">3小时前</p>
-      </div>
-      <div class="h_list_c">
-        <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
-        <van-image
-          width="48"
-          height="48"
-          fit="cover"
-          lazy-load
-          src="http://img2.imgtn.bdimg.com/it/u=3919916074,3193097114&fm=26&gp=0.jpg"
-        />
-      </div>
-    </div>
-    <div class="h_list">
-      <div class="h_list_t">
-        <p class="h_list_t_title">
-          <van-image
-            width="26"
-            height="26"
-            fit="cover"
-            lazy-load
-            round
-            src="http://qd.php.tedu.cn/upload/20171017/20171017160204_136.jpg"
-          />
-          <span>PHP</span>
-        </p>
-        <p class="h_list_t_time">1小时前</p>
-      </div>
-      <div class="h_list_c">
-        <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
-        <van-image
-          width="48"
-          height="48"
-          fit="cover"
-          lazy-load
-          src="http://img3.houxue.com/filestore/img/2018/03/24/l/4454.jpg"
-        />
-      </div>
-    </div>
-    <div class="h_list">
-      <div class="h_list_t">
-        <p class="h_list_t_title">
-          <van-image
-            width="26"
-            height="26"
-            fit="cover"
-            lazy-load
-            round
-            src="http://5b0988e595225.cdn.sohucs.com/images/20180427/a7edbf22edbf4756ac126ee282b1086f.jpeg"
-          />
-          <span>Pyhon</span>
-        </p>
-        <p class="h_list_t_time">今天</p>
-      </div>
-      <div class="h_list_c">
-        <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
-        <van-image
-          width="48"
-          height="48"
-          fit="cover"
-          lazy-load
-          src="http://img4.imgtn.bdimg.com/it/u=2895274932,1289346088&fm=26&gp=0.jpg"
-        />
-      </div>
-    </div>
-    <div class="h_list">
-      <div class="h_list_t">
-        <p class="h_list_t_title">
-          <van-image
-            width="26"
-            height="26"
-            fit="cover"
-            lazy-load
-            round
-            src="http://test.rexhang.com/blog/wp-content/uploads/2016/03/20150301021016689.png"
-          />
-          <span>JS</span>
-        </p>
-        <p class="h_list_t_time">2020-01-15</p>
-      </div>
-      <div class="h_list_c">
-        <p class="h_list_c_ass">很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,很多内容,</p>
-        <van-image
-          width="48"
-          height="48"
-          fit="cover"
-          lazy-load
-          src="http://img2.imgtn.bdimg.com/it/u=3919916074,3193097114&fm=26&gp=0.jpg"
-        />
+        </div>
       </div>
     </div>
   </div>
@@ -170,24 +42,56 @@ export default {
   name: "home",
   data() {
     return {
-      images: []
+      images: [],
+      artLists: {}
     };
   },
-  mounted() {},
+  mounted() {
+    this.article();
+    this.getBanner();
+  },
   methods: {
+    article: function() {
+      this.$api.post("article/article").then(res => {
+        this.artLists = res.data;
+      });
+    },
     // 去详情页
-    toDetail() {
+    toDetail(item) {
+      localStorage.setItem("infoID",item.id);
       this.$router.push("/detail");
     },
+    // banner
     getBanner() {
-      this.$axios
-        .post("https://35666j.com/index.php/index/webs/banner")
-        .then(res => {
-          this.images = res.data.data.banner;
-        });
+      this.$api.post("ab/lists").then(res => {
+        this.images = res.data;
+      });
     }
   },
-  components: {}
+  filters: {
+    setDate(value) {
+      let date = Math.floor(new Date(value).getTime() / 1000);
+      let nowDate = Math.floor(new Date().getTime() / 1000);
+      let kk = nowDate - date;
+      return kk < 60
+        ? "刚刚"
+        : kk > 60 && kk < 120
+        ? "1分钟前"
+        : kk > 120 && kk < 180
+        ? "2分钟前"
+        : kk > 180 && kk < 240
+        ? "3分钟前"
+        : kk > 240 && kk < 300
+        ? "4分钟前"
+        : kk > 300 && kk < 600
+        ? "5分钟前"
+        : kk > 600 && kk < 3600
+        ? "10分钟前"
+        : kk > 3600
+        ? "一小时前"
+        : "好久以前";
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>

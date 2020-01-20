@@ -15,7 +15,7 @@ import i18n from './lang/'
 
 Vue.use(Vant);
 Vue.use(Lazyload);
-Vue.prototype.$api = api.post;
+Vue.prototype.$api = api;
 Vue.prototype.$theme = 'default';
 Vue.config.productionTip = false
 

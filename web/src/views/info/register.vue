@@ -16,48 +16,73 @@
         <van-field type="password" v-model="password2" placeholder="请输入确认密码(6-16位)" />
       </div>
       <div class="sp_btn">
-        <van-button size="large" color="#ff6880">确认修改</van-button>
+        <van-button size="large" color="#ff6880" @click="register">确认注册</van-button>
       </div>
     </div>
   </div>
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       username: "",
       password: "",
       password2: "",
-      code: "",
-    }
+      code: ""
+    };
   },
   mounted() {},
   methods: {
+    // 注册
+    register: function() {
+      this.$api
+        .post("user/register", {
+          username: this.username,
+          password: this.password,
+          repassword: this.password2
+        })
+        .then(res => {
+          if (res.code === 1000) {
+            this.$toast(res.msg);
+            setTimeout(() => {
+              this.$router.push("/login");
+            }, 1680);
+          } else {
+            this.$toast(res.msg);
+            setTimeout(() => {
+              this.username = "";
+              this.password = "";
+              this.password2 = "";
+            }, 1280);
+          }
+        });
+    },
+    // 返回
     onClickLeft() {
       this.$router.push("/login");
     }
   },
   components: {}
-}
+};
 </script>
 <style lang="scss" scoped>
-.reg_field{
+.reg_field {
   padding: 15px;
   height: 100%;
   background: #f2f2f2;
 }
-.sp_input{
+.sp_input {
   margin-bottom: 15px;
 }
-.sp_input_code{
+.sp_input_code {
   display: flex;
   align-items: center;
-  button{
+  button {
     padding: 0;
     margin-left: 15px;
   }
 }
-.sp_btn{
+.sp_btn {
   margin-top: 40px;
 }
 </style>

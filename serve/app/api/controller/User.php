@@ -66,6 +66,7 @@ class User extends Base
         //校验用户名密码
         $user = Users::where('username', $username)
             ->where('password', md5($password))
+            ->field('username,theme,language,isrelease,status,image')
             ->find();
         if (empty($user)) {
             $this->result([], 1002, '帐号或密码错误');
@@ -77,7 +78,8 @@ class User extends Base
                 //更新信息
                 Users::where('id', $user['id'])
                     ->update(['last_login_time' => time(), 'last_login_ip' => Request::ip()]);
-                $this->result(['token' => $token], 1000, '登录成功');
+                $user['token'] = $token;
+                $this->result($user, 1000, '登录成功');
             } else {
                 $this->result([], 0, '用户已被禁用');
             }

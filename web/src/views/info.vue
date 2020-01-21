@@ -3,7 +3,7 @@
     <div class="users">
       <van-image class="user_tximg" :src="userTximg" lazy-load @click="toFixTX" />
       <div class="uesr_text">
-        <router-link to="/login" tag="span">{{$t('user.Login')}}</router-link>
+        <router-link to="/" tag="span">{{$t('user.Login')}}</router-link>
         <span class="uesr_text_tips">|</span>
         <router-link to="/register" tag="span">{{$t('user.Register')}}</router-link>
       </div>
@@ -45,9 +45,9 @@ export default {
       this.checked = true;
     }
     if (Cookies.get("language") == "zh") {
-      this.lang = false;
-    } else {
       this.lang = true;
+    } else {
+      this.lang = false;
     }
   },
   methods: {

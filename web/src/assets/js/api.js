@@ -28,10 +28,12 @@ const post = function( url,data ) {
   return new Promise( ( resolve,reject ) => {
     axios.post( url,{token:token,...data} )
       .then( res => {
-        if( res.data.errorcode === 600 )
+        console.log(res)
+        if( res.data.code === 10002 )
         {
+          clear()
           setTimeout( () => {
-            clear()
+            router.push( "/" )
           },100 );
         } else if( res.data.code){
           resolve( res.data );

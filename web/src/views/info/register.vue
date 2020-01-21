@@ -45,7 +45,7 @@ export default {
           if (res.code === 1000) {
             this.$toast(res.msg);
             setTimeout(() => {
-              this.$router.push("/login");
+              this.$router.push("/");
             }, 1680);
           } else {
             this.$toast(res.msg);
@@ -59,7 +59,7 @@ export default {
     },
     // 返回
     onClickLeft() {
-      this.$router.push("/login");
+      this.$router.push("/");
     }
   },
   components: {}

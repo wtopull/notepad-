@@ -34,7 +34,7 @@ export default {
   mounted() {},
   methods: {
     onClickLeft() {
-      this.$router.push("/login");
+      this.$router.push("/");
     },
   },
   components: {}

@@ -7,8 +7,14 @@ if (!window.VueRouter) Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'login',
+    component: () => import(/* webpackChunkName: "login" */ '../views/info/login.vue')
+  },
+  {
+    path: '/Home',
+    name: 'Home',
+    // component: Home
+    component: () => import(/* webpackChunkName: "Home" */ '../views/Home.vue')
   },
   {
     path: '/Fro',
@@ -29,11 +35,6 @@ const routes = [
     path: '/detail',
     name: 'detail',
     component: () => import(/* webpackChunkName: "detail" */ '../views/details/detail.vue')
-  },
-  {
-    path: '/login',
-    name: 'login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/info/login.vue')
   },
   {
     path: '/register',

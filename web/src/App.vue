@@ -3,7 +3,7 @@
     <div class="pages">
       <router-view />
       <van-tabbar route>
-        <van-tabbar-item replace to="/">{{$t("Home")}}</van-tabbar-item>
+        <van-tabbar-item replace to="/Home">{{$t("Home")}}</van-tabbar-item>
         <van-tabbar-item replace to="/Fro">{{$t("Fro")}}</van-tabbar-item>
         <van-tabbar-item replace to="/Ser">{{$t("Ser")}}</van-tabbar-item>
         <van-tabbar-item replace to="/Info">{{$t("Info")}}</van-tabbar-item>
@@ -29,7 +29,7 @@ export default {
     }
   },
   mounted(){
-    this.switchTheme(this.$theme)
+    this.switchTheme(this.$theme);
   },
   methods: {
     switchTheme:function(themeName){

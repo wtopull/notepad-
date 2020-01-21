@@ -68,6 +68,7 @@ class User extends Base
             ->where('password', md5($password))
             ->field('username,theme,language,isrelease,status,image')
             ->find();
+        
         if (empty($user)) {
             $this->result([], 1002, '帐号或密码错误');
         } else {

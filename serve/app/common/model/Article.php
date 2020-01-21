@@ -26,8 +26,8 @@ class Article extends Base
             $page = $where['page'];
         }
         $start = $page_size * $page;
-        $articles = Db::table('tp_article a')
-            ->join('tp_cate c', 'a.cate_id=c.id', 'left')
+        $articles = Db::table('com_article a')
+            ->join('com_cate c', 'a.cate_id=c.id', 'left')
             ->field('a.id,a.cate_id,a.title,a.thumb,c.image,a.sort')
             ->limit($start, $page_size);
         if (isset($where['cate_id'])) {

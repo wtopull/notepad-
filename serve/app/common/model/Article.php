@@ -22,22 +22,25 @@ class Article extends Base
      */
     public static function articleList($where = array(), $page = 1, $page_size = 15, $order = ['sort', 'sort' => 'desc'])
     {
-        if (isset($where['page'])) {
+        $start = 0;
+        if (isset($where['page']) && $where['page'] > 1) {
             $page = $where['page'];
+            $start = $page_size * $page;
         }
-        $start = $page_size * $page;
+
         $articles = Db::table('com_article a')
             ->join('com_cate c', 'a.cate_id=c.id', 'left')
             ->field('a.id,a.cate_id,a.title,a.thumb,c.image,a.sort')
             ->limit($start, $page_size);
         if (isset($where['cate_id'])) {
-            $articles->where('cate_id', $where['cate_id']);
+//            print_r($where['cate_id']);die;
+            $articles->where('cate_id','in', $where['cate_id']);
         }
 
         if (isset($where['title'])) {
             $articles->where('a.title', 'like', $where['title'] . '%');
         }
-        return $articles->order($order)->select();
+        return $articles->order($order)->order('id desc')->select();
     }
 
     /**
@@ -50,10 +53,31 @@ class Article extends Base
      */
     public static function info($id)
     {
-        return self::where('id',$id)
-            ->where('status',1)
+        return self::where('id', $id)
+            ->where('status', 1)
             ->field('title,content,hits,author')
             ->find();
     }
+
+//    public static function tabBarArticleLists($where = array(), $page = 1, $page_size = 15, $order = ['sort', 'sort' => 'desc'])
+//    {
+//        $start = 0;
+//        if (isset($where['page'])) {
+//            $page = $where['page'];
+//            $start = $page_size * $page;
+//        }
+//        $articles = Db::table('com_article a')
+//            ->field('a.id,a.cate_id,a.title,a.thumb,a.sort')
+//            ->limit($start, $page_size);
+//        if (isset($where['cate_id'])) {
+////            print_r($where['cate_id']);die;
+//            $articles->where('cate_id','in',$where['cate_id']);
+//        }
+//
+//        if (isset($where['title'])) {
+//            $articles->where('a.title', 'like', $where['title'] . '%');
+//        }
+//        return $articles->order($order)->order('id desc')->select();
+//    }
 
 }

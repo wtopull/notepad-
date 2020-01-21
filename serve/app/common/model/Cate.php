@@ -23,6 +23,7 @@
  *                      '.:::::'                    ':'````..
  * +----------------------------------------------------------------------
  */
+
 namespace app\common\model;
 
 class Cate extends Base
@@ -33,18 +34,29 @@ class Cate extends Base
     // 一对一获取所属模型
     public function module()
     {
-        return $this->belongsTo('Module','moduleid');
+        return $this->belongsTo('Module', 'moduleid');
     }
 
     // 获取列表
-    public static function getList($where = array(), $order = ['sort', 'id'=>'desc']){
+    public static function getList($where = array(), $order = ['sort', 'id' => 'desc'])
+    {
         $list = self::where($where)
             ->order($order)
             ->select();
         foreach ($list as $k => $v) {
             $v['modulename'] = $v->module->getData('title');
-            $v['moduleurl']  = $v->module->getData('name');
+            $v['moduleurl'] = $v->module->getData('name');
         }
+        return $list;
+    }
+
+    // 获取列表
+    public static function cateGetList($where = array(), $order = ['sort', 'id' => 'desc'])
+    {
+        $list = self::where($where)
+            ->order($order)
+            ->field('catname,id')
+            ->column('catname','id');
         return $list;
     }
 }

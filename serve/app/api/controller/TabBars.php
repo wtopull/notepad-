@@ -35,7 +35,8 @@ class TabBars extends Base
         if (!$cates) {
             $this->result([], 0, '该类目不一级分类');
         }
-        $cateArticles = Article::articleList(['cate_id' => implode(',', array_keys($cates))], $page);
+//        print_r(array_keys($cates)[0]);die;
+        $cateArticles = Article::articleList(['cate_id' => array_keys($cates)[0]], $page);
         $data['lable'] = $cates;
         $data['articles'] = $cateArticles;
 //        print_r($data);die;

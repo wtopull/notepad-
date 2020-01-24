@@ -34,3 +34,5 @@ Cookies.set('name', 'value');
 Cookies.get('name');
 Cookies.remove('name');
 ```
+
+http://www.wangeditor.com/index.html

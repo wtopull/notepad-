@@ -5,8 +5,11 @@ const en = {
   Info: 'Info',
   Theme:'Theme',
   Language: 'Language',
+  NightMode: 'Night',
+  Issue: 'Issue',
   user: {
     Login: 'Login',
+    LoginOut: 'LoginOut',
     Register: 'Register'
   }
 }

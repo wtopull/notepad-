@@ -23,7 +23,16 @@ body,
   left: 0;
   z-index: 2;
 }
-
+@media screen and (min-width: 768px) {
+  html,
+  body {
+    font-size: 100px !important;
+    width: 16rem !important;
+  }
+  .van-tabbar{
+    width: 16rem !important;
+  }
+}
 /* 主题切换--默认色 */
 .default_theme .pages {
   background-color: rgb(243, 243, 243);
@@ -34,7 +43,7 @@ body,
 
 /* 主题切换--红色 */
 .black_theme .pages {
-  background-color: rgb(224, 16, 16);
+  background-color: rgb(0, 0, 0);
   height: 100%;
   width: 100%;
   overflow: hidden;

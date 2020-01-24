@@ -15,15 +15,15 @@
       </div>
     </div>
     <van-cell center :title="$t('Theme')">
-      <van-switch v-model="checked" slot="right-icon" size="24" />
+      <van-switch v-model="theme" slot="right-icon" size="24" @change="switchTheme" />
     </van-cell>
     <van-cell center :title="$t('Language')">
       <van-switch v-model="lang" slot="right-icon" size="24" @change="switchLang" />
     </van-cell>
-    <van-cell title="夜间模式" is-link />
-    <van-cell title="发布文章" is-link to="/issue" v-if="userInfo.isrelease === '1'" />
+    <van-cell :title="$t('NightMode')" is-link />
+    <van-cell :title="$t('Issue')" is-link to="/issue" v-if="userInfo.isrelease === '1'" />
     <div style="margin:100px auto 0;width:80%;">
-      <van-button block color="linear-gradient(to right, #4bb0ff, #1B89FF)">退出登录</van-button>
+      <van-button block color="linear-gradient(to right, #4bb0ff, #1B89FF)" @click="logout">{{$t('user.LoginOut')}}</van-button>
     </div>
   </div>
 </template>
@@ -31,32 +31,30 @@
 <script>
 import Cookies from "js-cookie";
 export default {
-  name: "home",
   data() {
     return {
       userTximg: require("../assets/img/icon_avatar.png"),
-      checked: false,
       lang: false,
+      theme: false,
       userInfo: {}
     };
   },
   watch: {
-    checked: function(val) {
+    theme: function(val) {
       if (val) {
         this.$store.dispatch("setTheme", "black");
       } else {
-        this.$store.commit("setTheme", "default");
+        this.$store.dispatch("setTheme", "default");
       }
     }
   },
   mounted() {
-    if (this.$theme == "default") {
-      this.checked = false;
+    if (this.$store.state.theme == "default") {
+      this.theme = false;
     } else {
-      this.checked = true;
+      this.theme = true;
     }
     let user = JSON.parse(Cookies.get("user"));
-    console.log(user);
     this.userInfo = user;
     if (user.image) {
       this.userTximg = user.image;
@@ -68,17 +66,56 @@ export default {
     }
   },
   methods: {
+    // 设置头像
     toFixTX() {
       this.$router.push("/fixTx");
     },
-    switchLang(e) {
+    // 主题
+    switchTheme(e) {
+      let num = 0;
       if (e) {
-        this.$store.dispatch("setLanguage", "zh");
-        this.$i18n.locale = "zh";
+        num = 0;
       } else {
+        num = 1;
+      }
+      this.$api.post("user/editInfo", { theme: num }).then(res => {
+        this.$toast(res.msg);
+      });
+    },
+    // 语言
+    switchLang(e) {
+      let num = 0;
+      if (e) {
         this.$store.dispatch("setLanguage", "en");
         this.$i18n.locale = "en";
+        num = 0;
+      } else {
+        this.$store.dispatch("setLanguage", "zh");
+        this.$i18n.locale = "zh";
+        num = 1;
       }
+      this.$api.post("user/editInfo", { language: num }).then(res => {
+        this.$toast(res.msg);
+        let user = JSON.parse(Cookies.get("user"));
+        if (e) {
+          user.language = 0;
+          Cookies.set("language", "en");
+          Cookies.set("user", JSON.stringify(user));
+          this.$i18n.locale = "en";
+        } else {
+          user.language = 1;
+          Cookies.set("language", "zh");
+          Cookies.set("user", JSON.stringify(user));
+          this.$i18n.locale = "zh";
+        }
+      });
+    },
+    logout: function(){
+      Cookies.remove("language")
+      Cookies.remove("theme")
+      Cookies.remove("token")
+      Cookies.remove("user")
+      this.$router.push("/")
     }
   },
   components: {}

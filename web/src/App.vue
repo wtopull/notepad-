@@ -12,36 +12,34 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import { mapGetters } from 'vuex'
+import Vue from "vue";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {};
   },
-  computed:{
-    ...mapGetters([
-        'getTheme'
-    ]),
+  computed: {
+    ...mapGetters(["getTheme"])
   },
-  watch:{
-    getTheme:function(val){
-        this.switchTheme(val)
+  watch: {
+    getTheme: function(val) {
+      this.switchTheme(val);
     }
   },
-  mounted(){
-    this.switchTheme(this.$theme);
+  mounted() {
+    this.switchTheme(this.$store.state.theme);
   },
   methods: {
-    switchTheme:function(themeName){
-        this.$refs.app.className=themeName+"_theme";
-        document.body.className=themeName+"_theme";
-        Vue.prototype.$theme=themeName;
-      },
+    switchTheme: function(themeName) {
+      this.$refs.app.className = themeName + "_theme";
+      document.body.className = themeName + "_theme";
+      Vue.prototype.$theme = themeName;
+    }
   }
 };
 </script>
 <style lang="scss">
-.van-tabbar-item__text{
+.van-tabbar-item__text {
   font-size: 14px;
 }
 </style>

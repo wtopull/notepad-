@@ -27,11 +27,9 @@ export default {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("token", token);
-      
       axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-      console.log(axios.defaults.headers.post);
       instance.post("http://172.17.16.243/api/user/upload", formData).then(res => {
-        console.log(res);
+        console.log(res.data);
       });
     },
     update: function() {

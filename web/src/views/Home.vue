@@ -58,7 +58,10 @@ export default {
     },
     // 去详情页
     toDetail(item) {
-      localStorage.setItem("infoID",item.id);
+      let infos = {};
+      infos.id = item.id;
+      infos.router = "Home";
+      localStorage.setItem("infos", JSON.stringify(infos));
       this.$router.push("/detail");
     },
     // banner

@@ -1,11 +1,17 @@
 <template>
   <div class="front">
-    <van-nav-bar left-text="面向大前端" right-text="搜索" @click-right="onClickRight" />
-    <van-tabs animated swipeable>
-      <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index">
+    <van-nav-bar left-text="面向大前端" />
+    <van-tabs animated swipeable @click="onClick">
+      <van-tab v-for="(lable,lableIndex) in lable" :title="lable" :key="lableIndex">
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-          <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-            <van-cell v-for="item in list" :key="item" :title="item" is-link />
+          <van-list v-model="loading" :finished="finished" finished-text="没有更多了">
+            <van-cell
+              v-for="(item,index) in infoList"
+              :key="index"
+              :title="item.title"
+              is-link
+              @click="toDetail(item)"
+            />
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -19,21 +25,47 @@ export default {
     return {
       active: 0,
       isLoading: false,
-      list: [],
+      infoList: [],
+      lable: {},
       loading: false,
-      finished: false
+      finished: false,
+      id: 0
     };
   },
-  mounted() {},
+  mounted() {
+    this.getInfos();
+  },
   methods: {
-    onClickRight() {
-      console.log("搜索");
+    // 去详情页
+    toDetail(item) {
+      let infos = {};
+      infos.id = item.id;
+      infos.router = "Fro";
+      localStorage.setItem("infos", JSON.stringify(infos));
+      this.$router.push("/detail");
+    },
+    onClick: function(name, title) {
+      this.id = Object.keys(this.lable)[name];
+      this.getArticles();
+    },
+    getInfos: function() {
+      this.$api.post("TabBars/cateArticleInfos", { cate_id: 8 }).then(res => {
+        this.infoList = res.data.articles;
+        this.lable = res.data.lable;
+      });
+    },
+    getArticles: function() {
+      this.loading = false;
+      this.$api.post("TabBars/cateArticles", { cate_id: this.id }).then(res => {
+        this.infoList = res.data;
+        this.finished = true;
+      });
     },
     onLoad() {
       // 异步更新数据
       setTimeout(() => {
         for (let i = 0; i < 20; i++) {
-          this.list.push(this.list.length + 1);
+          this.infoList.push(this.infoList.length + 1);
         }
         // 加载状态结束
         this.loading = false;
@@ -46,7 +78,7 @@ export default {
     // 下拉刷新
     onRefresh() {
       setTimeout(() => {
-        // this.$toast("刷新成功");
+        this.getInfos();
         this.isLoading = false;
       }, 1000);
     }

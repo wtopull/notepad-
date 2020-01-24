@@ -2,20 +2,44 @@
   <div class="cpages tx">
     <van-nav-bar left-arrow left-text="返回" title="设置头像" @click-left="onClickLeft" />
     <div class="tx_box">
-      <van-uploader v-model="fileList" multiple :max-count="1" :before-read="beforeRead" />
-      <van-button class="upload" type="primary" color="#ff6880" block>立即上传</van-button>
+      <!-- <van-uploader v-model="fileList" :max-count="1" :before-read="beforeRead" /> -->
+      <input type="file" accept="image/*" @change="headImgChange" />
+      <!-- <van-button class="upload" type="primary" color="#ff6880" block @click="update">立即上传</van-button> -->
     </div>
   </div>
 </template>
 <script>
+import Cookies from "js-cookie";
+import axios from 'axios'
 export default {
   data() {
     return {
-      fileList: []
+      fileList: [],
+      file: {}
     };
   },
   mounted() {},
   methods: {
+    headImgChange(e) {
+      const token = Cookies.get( 'token' )
+      let instance = axios.create();
+      let file = e.target.files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("token", token);
+      
+      axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+      console.log(axios.defaults.headers.post);
+      instance.post("http://172.17.16.243/api/user/upload", formData).then(res => {
+        console.log(res);
+      });
+    },
+    update: function() {
+      let formData = new FormData();
+      formData.append("file", this.file);
+      console.log(formData);
+    },
+    // 返回
     onClickLeft() {
       this.$router.push("/Info");
     },
@@ -27,11 +51,13 @@ export default {
           forbidClick: true
         });
         return false;
-      } else if (file.type === "image/jpeg") {
-        return true;
-      } else if (file.type === "image/jpg") {
-        return true;
-      } else if (file.type === "image/png") {
+      } else if (
+        file.type === "image/jpeg" ||
+        file.type === "image/jpg" ||
+        file.type === "image/png"
+      ) {
+        console.log(file);
+        this.file = file;
         return true;
       } else {
         this.$toast({

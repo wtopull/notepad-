@@ -21,17 +21,17 @@ export default {
       author: "中文社区",
       isLoading: false,
       lists: {},
-      infoID: 0
+      infos: {}
     };
   },
   mounted() {
     window.addEventListener("scroll", this.scrollToTop, true);
-    this.infoID = localStorage.getItem("infoID")
+    this.infos = JSON.parse(localStorage.getItem("infos"));
     this.info();
   },
   methods: {
     info: function() {
-      this.$api.post("article/info", { id: this.infoID }).then(res => {
+      this.$api.post("article/info", { id: this.infos.id }).then(res => {
         this.lists = res.data;
         this.author = res.data.author;
       });
@@ -44,7 +44,7 @@ export default {
       }
     },
     onClickLeft() {
-      this.$router.push("/");
+      this.$router.push(this.infos.router);
     },
     // 下拉刷新
     onRefresh() {

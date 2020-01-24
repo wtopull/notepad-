@@ -21,7 +21,7 @@
       <van-switch v-model="lang" slot="right-icon" size="24" @change="switchLang" />
     </van-cell>
     <van-cell title="夜间模式" is-link />
-    <van-cell title="发布文章" is-link to="/issue"  v-if="userInfo.isrelease === '1'" />
+    <van-cell title="发布文章" is-link to="/issue" v-if="userInfo.isrelease === '1'" />
     <div style="margin:100px auto 0;width:80%;">
       <van-button block color="linear-gradient(to right, #4bb0ff, #1B89FF)">退出登录</van-button>
     </div>
@@ -57,10 +57,13 @@ export default {
     }
     let user = JSON.parse(Cookies.get("user"));
     console.log(user);
-    this.userInfo = user
+    this.userInfo = user;
+    if (user.image) {
+      this.userTximg = user.image;
+    }
     if (user.language === 1) {
       this.lang = false;
-      } else {
+    } else {
       this.lang = true;
     }
   },

@@ -51,6 +51,11 @@ const routes = [
     name: 'fixTx',
     component: () => import(/* webpackChunkName: "fix-tx" */ '../views/info/fix-tx.vue')
   },
+  {
+    path: '/issue',
+    name: 'issue',
+    component: () => import(/* webpackChunkName: "issue" */ '../views/issue/issue.vue')
+  },
 ]
 
 const router = new VueRouter({

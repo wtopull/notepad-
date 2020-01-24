@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
 export default {
   data() {
     return {
@@ -29,33 +29,61 @@ export default {
     };
   },
   mounted() {
-    if(location.hostname === "172.17.16.38" || location.hostname === "localhost"){
-      this.username = "criss168"
-      this.password = "11211121"
+    if (
+      location.hostname === "172.17.16.38" ||
+      location.hostname === "localhost"
+    ) {
+      this.username = "criss168";
+      this.password = "11211121";
     }
   },
   methods: {
     // 登录
-    login: function(){
+    login: function() {
       this.islogin = true;
-      this.$api.post("user/login",{username: this.username,password:this.password}).then( res => {
-        if(res.code === 1000){
-          Cookies.set("token",res.data.token)
+      this.$api
+        .post("user/login", {
+          username: this.username,
+          password: this.password
+        })
+        .then(res => {
+          if (res.code === 1000) {
+            Cookies.set("token", res.data.token);
+            Cookies.set("user", JSON.stringify(res.data));
+            // 设置主题色
+            if (res.data.theme) {
+              this.$store.dispatch("setTheme", "default");
+            } else {
+              this.$store.dispatch("setTheme", "black");
+            }
+            if (res.data.language === 1) {
+              this.$store.dispatch("setLanguage", "zh");
+              this.$i18n.locale = "zh";
+            } else {
+              this.$store.dispatch("setLanguage", "en");
+              this.$i18n.locale = "en";
+            }
+            // 设置语言
+            this.islogin = false;
+            this.$toast(res.msg);
+            setTimeout(() => {
+              this.$router.push("/info");
+            }, 1680);
+          } else {
+            this.$toast(res.msg);
+          }
+        })
+        .catch(err => {
           this.islogin = false;
-          this.$toast(res.msg)
-          setTimeout(() => {
-            this.$router.push("/info");
-          }, 1680);
-        }
-      })
+        });
     },
     // 返回
     onClickLeft() {
       this.$router.push("/info");
     },
     // 找回密码
-    toSetPWD:function(){
-      this.$router.push("/setpwd")
+    toSetPWD: function() {
+      this.$router.push("/setpwd");
     }
   },
   components: {}
@@ -68,21 +96,21 @@ export default {
   align-items: center;
   border-bottom: 1px solid #dcdcdc;
 }
-.login_user{
+.login_user {
   margin-top: 130px;
 }
-.set_pwd{
+.set_pwd {
   margin: 0;
   padding: 0px 30px;
   font-size: 14px;
   line-height: 36px;
   text-align: right;
 }
-.login_btn{
+.login_btn {
   padding: 0px 30px;
   margin-bottom: 15px;
 }
-.login_btn_login{
+.login_btn_login {
   margin-top: 40px;
 }
 </style>

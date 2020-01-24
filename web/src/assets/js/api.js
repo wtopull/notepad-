@@ -7,8 +7,8 @@ import Cookies from 'js-cookie'
 let baseUrl = '';
 if( process.env.NODE_ENV === 'production' )
 {
-  baseUrl = 'http://172.17.16.243';
-  axios.defaults.baseURL = 'http://172.17.16.243/api/';
+  baseUrl = 'http://www.dd0519.cn';
+  axios.defaults.baseURL = 'http://www.dd0519.cn/api/';
 } else
 {
   baseUrl = 'http://172.17.16.243';
@@ -28,10 +28,10 @@ const post = function( url,data ) {
   return new Promise( ( resolve,reject ) => {
     axios.post( url,{token:token,...data} )
       .then( res => {
-        console.log(res)
         if( res.data.code === 10002 )
         {
-          clear()
+          Cookies.remove("token");
+          Cookies.remove("user");
           setTimeout( () => {
             router.push( "/" )
           },100 );

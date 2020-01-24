@@ -1,11 +1,17 @@
 <template>
   <div class="view info">
-    <div class="users">
+    <div class="users" v-if="userInfo.username == ''">
       <van-image class="user_tximg" :src="userTximg" lazy-load @click="toFixTX" />
       <div class="uesr_text">
         <router-link to="/" tag="span">{{$t('user.Login')}}</router-link>
         <span class="uesr_text_tips">|</span>
         <router-link to="/register" tag="span">{{$t('user.Register')}}</router-link>
+      </div>
+    </div>
+    <div class="users" v-else>
+      <van-image class="user_tximg" :src="userTximg" lazy-load @click="toFixTX" />
+      <div class="uesr_text">
+        <span>{{userInfo.username}}</span>
       </div>
     </div>
     <van-cell center :title="$t('Theme')">
@@ -14,7 +20,11 @@
     <van-cell center :title="$t('Language')">
       <van-switch v-model="lang" slot="right-icon" size="24" @change="switchLang" />
     </van-cell>
-    <van-cell title="单元格" is-link />
+    <van-cell title="夜间模式" is-link />
+    <van-cell title="发布文章" is-link to="/issue"  v-if="userInfo.isrelease === '1'" />
+    <div style="margin:100px auto 0;width:80%;">
+      <van-button block color="linear-gradient(to right, #4bb0ff, #1B89FF)">退出登录</van-button>
+    </div>
   </div>
 </template>
 
@@ -26,7 +36,8 @@ export default {
     return {
       userTximg: require("../assets/img/icon_avatar.png"),
       checked: false,
-      lang: false
+      lang: false,
+      userInfo: {}
     };
   },
   watch: {
@@ -44,10 +55,13 @@ export default {
     } else {
       this.checked = true;
     }
-    if (Cookies.get("language") == "zh") {
-      this.lang = true;
-    } else {
+    let user = JSON.parse(Cookies.get("user"));
+    console.log(user);
+    this.userInfo = user
+    if (user.language === 1) {
       this.lang = false;
+      } else {
+      this.lang = true;
     }
   },
   methods: {
@@ -56,11 +70,11 @@ export default {
     },
     switchLang(e) {
       if (e) {
-        this.$store.dispatch("setLanguage", "en");
-        this.$i18n.locale = "en";
-      } else {
         this.$store.dispatch("setLanguage", "zh");
         this.$i18n.locale = "zh";
+      } else {
+        this.$store.dispatch("setLanguage", "en");
+        this.$i18n.locale = "en";
       }
     }
   },

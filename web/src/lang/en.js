@@ -3,7 +3,7 @@ const en = {
   Fro: 'Fro',
   Ser: 'Ser',
   Info: 'Info',
-  Theme:'Theme',
+  Theme: 'Theme',
   Language: 'Language',
   NightMode: 'Night',
   Issue: 'Issue',

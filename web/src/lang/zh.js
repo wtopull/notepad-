@@ -3,7 +3,7 @@ const zh = {
   Fro: '前端',
   Ser: '后端',
   Info: '我的',
-  Theme:'主题切换',
+  Theme: '主题切换',
   Language: '语言切换',
   NightMode: '夜间模式',
   Issue: '发布文章',

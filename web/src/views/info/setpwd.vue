@@ -3,7 +3,7 @@
     <van-nav-bar title="忘记密码" left-arrow @click-left="onClickLeft" />
     <div class="sp_field">
       <div class="sp_input">
-        <van-field  type="number" v-model="username" placeholder="请输入用户名" />
+        <van-field type="number" v-model="username" placeholder="请输入用户名" />
       </div>
       <div class="sp_input sp_input_code">
         <van-field v-model="code" placeholder="请输入验证码" />
@@ -23,41 +23,41 @@
 </template>
 <script>
 export default {
-  data () {
+  data() {
     return {
       username: "",
       code: "",
       password: "",
       newPassword: ""
-    }
+    };
   },
   mounted() {},
   methods: {
     onClickLeft() {
       this.$router.push("/");
-    },
+    }
   },
   components: {}
-}
+};
 </script>
 <style lang="scss" scoped>
-.sp_field{
+.sp_field {
   padding: 15px;
   height: 100%;
   background: #f2f2f2;
 }
-.sp_input{
+.sp_input {
   margin-bottom: 15px;
 }
-.sp_input_code{
+.sp_input_code {
   display: flex;
   align-items: center;
-  button{
+  button {
     padding: 0;
     margin-left: 15px;
   }
 }
-.sp_btn{
+.sp_btn {
   margin-top: 40px;
 }
 </style>

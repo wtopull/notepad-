@@ -10,7 +10,7 @@
 </template>
 <script>
 import Cookies from "js-cookie";
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
@@ -21,16 +21,18 @@ export default {
   mounted() {},
   methods: {
     headImgChange(e) {
-      const token = Cookies.get( 'token' )
+      const token = Cookies.get("token");
       let instance = axios.create();
       let file = e.target.files[0];
       const formData = new FormData();
       formData.append("file", file);
       formData.append("token", token);
       axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
-      instance.post("http://172.17.16.243/api/user/upload", formData).then(res => {
-        console.log(res.data);
-      });
+      instance
+        .post("http://172.17.16.243/api/user/upload", formData)
+        .then(res => {
+          console.log(res.data);
+        });
     },
     update: function() {
       let formData = new FormData();

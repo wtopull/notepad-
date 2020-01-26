@@ -1,14 +1,14 @@
 <template>
   <div class="view info">
-    <div class="users" v-if="userInfo.username == ''">
+    <!-- <div class="users" v-if="userInfo.username == ''">
       <van-image class="user_tximg" :src="userTximg" lazy-load @click="toFixTX" />
       <div class="uesr_text">
         <router-link to="/" tag="span">{{$t('user.Login')}}</router-link>
         <span class="uesr_text_tips">|</span>
         <router-link to="/register" tag="span">{{$t('user.Register')}}</router-link>
       </div>
-    </div>
-    <div class="users" v-else>
+    </div>-->
+    <div class="users">
       <van-image class="user_tximg" :src="userTximg" lazy-load @click="toFixTX" />
       <div class="uesr_text">
         <span>{{userInfo.username}}</span>
@@ -23,7 +23,11 @@
     <van-cell :title="$t('NightMode')" is-link />
     <van-cell :title="$t('Issue')" is-link to="/issue" v-if="userInfo.isrelease === '1'" />
     <div style="margin:100px auto 0;width:80%;">
-      <van-button block color="linear-gradient(to right, #4bb0ff, #1B89FF)" @click="logout">{{$t('user.LoginOut')}}</van-button>
+      <van-button
+        block
+        color="linear-gradient(to right, #4bb0ff, #1B89FF)"
+        @click="logout"
+      >{{$t('user.LoginOut')}}</van-button>
     </div>
   </div>
 </template>
@@ -110,12 +114,12 @@ export default {
         }
       });
     },
-    logout: function(){
-      Cookies.remove("language")
-      Cookies.remove("theme")
-      Cookies.remove("token")
-      Cookies.remove("user")
-      this.$router.push("/")
+    logout: function() {
+      Cookies.remove("language");
+      Cookies.remove("theme");
+      Cookies.remove("token");
+      Cookies.remove("user");
+      this.$router.push("/");
     }
   },
   components: {}

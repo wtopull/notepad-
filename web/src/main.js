@@ -12,15 +12,15 @@ import { Lazyload } from 'vant';
 import i18n from './lang/'
 import Vue2Editor from "vue2-editor";
 
-Vue.use(Vue2Editor);
-Vue.use(Vant);
-Vue.use(Lazyload);
+Vue.use( Vue2Editor );
+Vue.use( Vant );
+Vue.use( Lazyload );
 Vue.prototype.$api = api;
 Vue.config.productionTip = false
 
-new Vue({
+new Vue( {
   router,
   store,
   i18n,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h( App )
+} ).$mount( '#app' )

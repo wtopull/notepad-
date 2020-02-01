@@ -10,14 +10,15 @@
       <div class="h_list" v-for="(item,index) in artLists" :key="index" @click="toDetail(item)">
         <div class="h_list_t">
           <p class="h_list_t_title">
-            <van-image
+            <!-- <van-image
               width="26"
               height="26"
               fit="cover"
               lazy-load
               round
               src="http://img1.imgtn.bdimg.com/it/u=2088455182,192644019&fm=26&gp=0.jpg"
-            />
+            /> -->
+            <img style="width: 26px; height: 26px;" src="http://img1.imgtn.bdimg.com/it/u=2088455182,192644019&fm=26&gp=0.jpg" alt="">
             <span>{{item.title}}</span>
           </p>
           <p class="h_list_t_time">{{item.sort | setDate}}</p>

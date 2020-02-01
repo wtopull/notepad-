@@ -1,7 +1,7 @@
 <template>
   <div class="front">
     <van-nav-bar left-text="面向大前端" />
-    <van-tabs animated swipeable @click="onClick">
+    <van-tabs animated swipeable @click="onClick" @change="change">
       <van-tab v-for="(lable,lableIndex) in lable" :title="lable" :key="lableIndex">
         <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
           <van-list v-model="loading" :finished="finished" finished-text="没有更多了">
@@ -36,6 +36,18 @@ export default {
     this.getInfos();
   },
   methods: {
+    change: function(e){
+      let lableName = [];
+      let lableNum = [];
+      for (const i in this.lable) {
+        if (this.lable.hasOwnProperty(i)) {
+          lableName.push(this.lable[i]);
+          lableNum.push(i)
+        }
+      }
+      this.id = lableNum[e];
+      this.getArticles();
+    },
     // 去详情页
     toDetail(item) {
       let infos = {};
@@ -45,6 +57,7 @@ export default {
       this.$router.push("/detail");
     },
     onClick: function(name, title) {
+      console.log(name,title);
       this.id = Object.keys(this.lable)[name];
       this.getArticles();
     },

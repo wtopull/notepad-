@@ -98,9 +98,9 @@ export default {
         this.$i18n.locale = "zh";
         num = 1;
       }
+      let user = JSON.parse(Cookies.get("user"));
       this.$api.post("user/editInfo", { language: num }).then(res => {
         this.$toast(res.msg);
-        let user = JSON.parse(Cookies.get("user"));
         if (e) {
           user.language = 0;
           Cookies.set("language", "en");
@@ -112,6 +112,8 @@ export default {
           Cookies.set("user", JSON.stringify(user));
           this.$i18n.locale = "zh";
         }
+      }).catch( err => {
+        console.log(err);
       });
     },
     logout: function() {

@@ -10,15 +10,14 @@
       <div class="h_list" v-for="(item,index) in artLists" :key="index" @click="toDetail(item)">
         <div class="h_list_t">
           <p class="h_list_t_title">
-            <!-- <van-image
+            <van-image
               width="26"
               height="26"
               fit="cover"
               lazy-load
               round
               src="http://img1.imgtn.bdimg.com/it/u=2088455182,192644019&fm=26&gp=0.jpg"
-            /> -->
-            <img style="width: 26px; height: 26px;" src="http://img1.imgtn.bdimg.com/it/u=2088455182,192644019&fm=26&gp=0.jpg" alt="">
+            />
             <span>{{item.title}}</span>
           </p>
           <p class="h_list_t_time">{{item.sort | setDate}}</p>
@@ -39,6 +38,7 @@
 </template>
 
 <script>
+import { setItem, getItem } from "@/assets/js/utils";
 export default {
   name: "home",
   data() {
@@ -53,9 +53,15 @@ export default {
   },
   methods: {
     article: function() {
-      this.$api.post("article/article").then(res => {
-        this.artLists = res.data;
-      });
+      let artLists = JSON.parse(getItem("artLists"));
+      if (artLists) {
+        this.artLists = artLists;
+      } else {
+        this.$api.post("article/article").then(res => {
+          this.artLists = res.data;
+          setItem("artLists", JSON.stringify(res.data));
+        });
+      }
     },
     // 去详情页
     toDetail(item) {
@@ -67,9 +73,15 @@ export default {
     },
     // banner
     getBanner() {
-      this.$api.post("ab/lists").then(res => {
-        this.images = res.data;
-      });
+      let banner = JSON.parse(getItem("banner"));
+      if (banner) {
+        this.images = banner;
+      } else {
+        this.$api.post("ab/lists").then(res => {
+          this.images = res.data;
+          setItem("banner", JSON.stringify(res.data));
+        });
+      }
     }
   },
   filters: {

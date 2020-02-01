@@ -1,5 +1,5 @@
 /**
- * window.sessionStorage
+ * window.sessionStorage  过期时间封装
  * 
  * 使用说明：
  * 

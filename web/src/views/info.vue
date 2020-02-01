@@ -99,22 +99,25 @@ export default {
         num = 1;
       }
       let user = JSON.parse(Cookies.get("user"));
-      this.$api.post("user/editInfo", { language: num }).then(res => {
-        this.$toast(res.msg);
-        if (e) {
-          user.language = 0;
-          Cookies.set("language", "en");
-          Cookies.set("user", JSON.stringify(user));
-          this.$i18n.locale = "en";
-        } else {
-          user.language = 1;
-          Cookies.set("language", "zh");
-          Cookies.set("user", JSON.stringify(user));
-          this.$i18n.locale = "zh";
-        }
-      }).catch( err => {
-        console.log(err);
-      });
+      this.$api
+        .post("user/editInfo", { language: num })
+        .then(res => {
+          this.$toast(res.msg);
+          if (e) {
+            user.language = 0;
+            Cookies.set("language", "en");
+            Cookies.set("user", JSON.stringify(user));
+            this.$i18n.locale = "en";
+          } else {
+            user.language = 1;
+            Cookies.set("language", "zh");
+            Cookies.set("user", JSON.stringify(user));
+            this.$i18n.locale = "zh";
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     logout: function() {
       Cookies.remove("language");

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {setItem,getItem} from '@/assets/js/utils'
+import { setItem, getItem } from "@/assets/js/utils";
 export default {
   data() {
     return {
@@ -37,13 +37,13 @@ export default {
     this.getInfos();
   },
   methods: {
-    change: function(e){
+    change: function(e) {
       let lableName = [];
       let lableNum = [];
       for (const i in this.lable) {
         if (this.lable.hasOwnProperty(i)) {
           lableName.push(this.lable[i]);
-          lableNum.push(i)
+          lableNum.push(i);
         }
       }
       this.id = lableNum[e];
@@ -58,22 +58,22 @@ export default {
       this.$router.push("/detail");
     },
     onClick: function(name, title) {
-      console.log(name,title);
+      console.log(name, title);
       this.id = Object.keys(this.lable)[name];
       this.getArticles();
     },
     getInfos: function() {
       let lable = JSON.parse(getItem("lable"));
       let infoList = JSON.parse(getItem("infoList"));
-      if(lable) {
-        this.infoList = infoList
-        this.lable = lable
+      if (lable) {
+        this.infoList = infoList;
+        this.lable = lable;
       } else {
         this.$api.post("TabBars/cateArticleInfos", { cate_id: 8 }).then(res => {
           this.infoList = res.data.articles;
           this.lable = res.data.lable;
-          setItem("lable",JSON.stringify(res.data.lable));
-          setItem("infoList",JSON.stringify(res.data.articles));
+          setItem("lable", JSON.stringify(res.data.lable));
+          setItem("infoList", JSON.stringify(res.data.articles));
         });
       }
     },

@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   baseUrl = 'http://172.17.16.243';
   axios.defaults.baseURL = 'http://172.17.16.243/api/';
+  axios.defaults.baseURL = 'http://www.dd0519.cn/api/';
 }
 // post请求
 const post = function (url, data = {}) {

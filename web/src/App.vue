@@ -42,4 +42,21 @@ export default {
 .van-tabbar-item__text {
   font-size: 14px;
 }
+::-webkit-scrollbar {
+  width: 2px;
+  height: 4px;
+  /* background-color: rgb(185, 207, 227); */
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: rgb(185, 207, 227);
+}
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 1px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: rgb(185, 207, 227);
+}
 </style>

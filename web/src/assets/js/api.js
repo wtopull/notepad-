@@ -5,8 +5,8 @@ import Cookies from 'js-cookie'
 
 let baseUrl = '';
 if (process.env.NODE_ENV === 'production') {
-  baseUrl = 'http://www.dd0519.cn';
-  axios.defaults.baseURL = 'http://www.dd0519.cn/api/';
+  baseUrl = 'http://172.17.16.38:8888';
+  axios.defaults.baseURL = 'http://172.17.16.38:8888/';
 } else {
   // baseUrl = 'http://172.17.16.243';
   // axios.defaults.baseURL = 'http://172.17.16.243/api/';

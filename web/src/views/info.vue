@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { clear } from "@/assets/js/utils";
 import Cookies from "js-cookie";
 export default {
   data() {
@@ -124,6 +125,8 @@ export default {
       Cookies.remove("theme");
       Cookies.remove("token");
       Cookies.remove("user");
+      clear();
+
       this.$router.push("/");
     }
   },

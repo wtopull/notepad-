@@ -1,6 +1,6 @@
 <template>
   <div class="cpages login">
-    <van-nav-bar title="用户登录" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="用户登录" />
     <div class="login_input login_user">
       <van-field v-model="username" label="账号" placeholder="请输入用户名" />
     </div>

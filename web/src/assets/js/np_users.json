@@ -1,0 +1,30 @@
+{
+  "RECORDS": [
+    {
+      "_id": {
+        "$oid": "5e3569dd007e0000180050d3"
+      },
+      "image": "https://35666t.com//base64/lhzjtest/2020-01-21/thumb1579595606356.jpg",
+      "isrelease": "1",
+      "language": 1,
+      "password": "11211121",
+      "status": 1,
+      "theme": 1,
+      "token": "",
+      "username": "criss168"
+    },
+    {
+      "_id": {
+        "$oid": "5e356a35007e0000180050d4"
+      },
+      "image": "http://35666j.com/uploads/mrtou.png",
+      "isrelease": "1",
+      "language": 1,
+      "password": "123456",
+      "status": 1,
+      "theme": 1,
+      "token": "",
+      "username": "ken123"
+    }
+  ]
+}

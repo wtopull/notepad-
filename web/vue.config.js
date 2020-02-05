@@ -18,9 +18,9 @@ const cdn = {
   css: [],
   // cdn的js链接
   js: [
-    'https://cdn.staticfile.org/vue/2.6.10/vue.min.js',
-    'https://cdn.staticfile.org/vuex/3.0.1/vuex.min.js',
-    'https://cdn.staticfile.org/vue-router/3.0.3/vue-router.min.js'
+    'https://cdn.jsdelivr.net/npm/vue@2.6.11',
+    'https://unpkg.com/vuex@3.1.1',
+    'https://unpkg.com/vue-router@3.0.0/dist/vue-router.js'
   ]
 }
 
@@ -77,38 +77,38 @@ module.exports = {
       )
       // 公共代码抽离
       config.optimization = {
-        splitChunks: {
-          cacheGroups: {
-            vendor: {
-              chunks: 'all',
-              test: /node_modules/,
-              name: 'vendor',
-              minChunks: 1,
-              maxInitialRequests: 5,
-              minSize: 0,
-              priority: 100
-            },
-            common: {
-              chunks: 'all',
-              test: /[\\/]src[\\/]js[\\/]/,
-              name: 'common',
-              minChunks: 2,
-              maxInitialRequests: 5,
-              minSize: 0,
-              priority: 60
-            },
-            styles: {
-              name: 'styles',
-              test: /\.(sa|sc|c)ss$/,
-              chunks: 'all',
-              enforce: true
-            },
-            runtimeChunk: {
-              name: 'manifest'
+          splitChunks: {
+            cacheGroups: {
+              vendor: {
+                chunks: 'all',
+                test: /node_modules/,
+                name: 'vendor',
+                minChunks: 1,
+                maxInitialRequests: 5,
+                minSize: 0,
+                priority: 100
+              },
+              common: {
+                chunks: 'all',
+                test: /[\\/]src[\\/]js[\\/]/,
+                name: 'common',
+                minChunks: 2,
+                maxInitialRequests: 5,
+                minSize: 0,
+                priority: 60
+              },
+              styles: {
+                name: 'styles',
+                test: /\.(sa|sc|c)ss$/,
+                chunks: 'all',
+                enforce: true
+              },
+              runtimeChunk: {
+                name: 'manifest'
+              }
             }
           }
         }
-      }
     }
   }
 }

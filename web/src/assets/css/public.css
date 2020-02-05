@@ -75,3 +75,25 @@ body,
   width: auto !important;
   margin-right: 15px;
 }
+
+
+/* markdown */
+.md{
+  padding: 10px;
+  width: calc(100% - 20px);
+  overflow: hidden;
+}
+.md h1{
+  line-height: 56px;
+}
+.md h3{
+  margin: 10px 0 !important;
+}
+pre{
+  margin: 10px 0;
+}
+.hljs{
+  border-radius: 4px;
+  overflow: hidden !important;
+  white-space: pre-wrap;
+}

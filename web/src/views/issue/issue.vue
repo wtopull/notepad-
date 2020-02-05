@@ -37,8 +37,8 @@ export default {
         message: "加载中...",
         forbidClick: true
       });
-      let id = "20200205"
-      axios.get(`http://172.17.16.38:8888/details?id=${id}`)
+      let wid = "20200205"
+      axios.get(`http://172.17.16.38:8888/details?wid=${wid}`)
         .then(res => {
           if(res.data.status === 200){
             this.md = res.data.data;

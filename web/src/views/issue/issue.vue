@@ -38,7 +38,7 @@ export default {
         forbidClick: true
       });
       let wid = "20200205"
-      axios.get(`http://172.17.16.38:8888/details?wid=${wid}`)
+      axios.get(`http://172.17.16.38:8888/api/details?wid=${wid}`)
         .then(res => {
           if(res.data.status === 200){
             this.md = res.data.data;
